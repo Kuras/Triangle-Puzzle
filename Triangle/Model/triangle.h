@@ -5,7 +5,9 @@
  *      Author: Baraka
  */
 
-typedef struct pixel *Pixel;
+#define WHITE 0
+#define BLACK 1
+typedef struct pixel pixel;
 typedef struct triangle *TrianglePicture;
 
 //assumes that width and height are pozitive number
@@ -21,17 +23,17 @@ void setPixel(TrianglePicture picture,int x,int y);
 
 //returns pixel for given location in grid
 // assumes that x and y are in right range
-Pixel getPixel(TrianglePicture picture,int x,int y);
+pixel getPixel(TrianglePicture picture,int x,int y);
 
 //returns one of three vertex(pixel) of Triangle ABC
-Pixel getRandomPixel(TrianglePicture picture);
+pixel getRandomPixel(TrianglePicture picture);
 
 // assumes that pixel are from picture
 // returns pixel witch is on the medium of line between two given pixels
-Pixel getCenterOF(Pixel pixelStart, Pixel pixelEnd, TrianglePicture picture);
+pixel getCenterOF(pixel pixelStart, pixel pixelEnd, TrianglePicture picture);
 
 // draw line in picture between two given pixels (DDA)-algorithm
-void drawLine(Pixel pixelStart, Pixel pixelEnd, TrianglePicture picture);
+void drawLine(pixel pixelStart, pixel pixelEnd, TrianglePicture picture);
 
 // write picture in file with ppm format
 void savePictureOnDisc(TrianglePicture picture);
