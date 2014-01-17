@@ -9,7 +9,7 @@
 #include<cstdlib>
 using namespace std;
 
-int step = 1000;
+int steps = 1000;
 int width = 1000;
 int hight = 1000;
 static void symulation(int step, TrianglePicture picture);
@@ -19,7 +19,7 @@ int main (void){
 	TrianglePicture picture;
 	picture = newTrianglePicture(width,hight);
 
-	symulation(step,picture);
+	symulation(steps,picture);
 
 	savePictureOnDisc(picture);
 
@@ -28,8 +28,20 @@ int main (void){
 	return EXIT_SUCCESS;
 }
 
-static void symulation(int step, TrianglePicture picture){
+static void symulation(int countOfSteps, TrianglePicture picture){
+	pixel firstPixel = getRandomPixel(picture);
+	pixel secondPixel;
+	pixel centerPixel;
 
+	int step = 0;
+	while (step < countOfSteps){
+		secondPixel = getRandomPixel(picture);
+		centerPixel = getCenterOF(firstPixel,secondPixel,picture);
+		drawLine(firstPixel,centerPixel,picture);
+
+		firstPixel = centerPixel;
+		step++;
+	}
 }
 
 
