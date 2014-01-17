@@ -9,10 +9,10 @@
 #include<cstdlib>
 using namespace std;
 
-int steps = 1000;
+int steps = 1000000;
 int width = 1000;
 int hight = 1000;
-static void symulation(int step, TrianglePicture picture);
+static void symulation(int countOfSteps, TrianglePicture picture);
 
 int main (void){
 
