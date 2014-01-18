@@ -5,6 +5,7 @@
  *      Author: Baraka
  */
 #include "../Model/triangle.h"
+#include "../Test/testtriangle.h"
 #include<iostream>
 #include<cstdlib>
 using namespace std;
@@ -16,7 +17,8 @@ static void symulation(int countOfSteps, TrianglePicture picture);
 
 int main (void){
 
-	TrianglePicture picture;
+	testTrianglePuzzle();
+/*	TrianglePicture picture;
 	picture = newTrianglePicture(width,hight);
 
 	symulation(steps,picture);
@@ -24,14 +26,14 @@ int main (void){
 	savePictureOnDisc(picture);
 
 	deleteTrianglePicture(picture);
-
+*/
 	return EXIT_SUCCESS;
 }
-
+/*
 static void symulation(int countOfSteps, TrianglePicture picture){
-	pixel firstPixel = getRandomPixel(picture);
-	pixel secondPixel;
-	pixel centerPixel;
+	Pixel firstPixel = getRandomPixel(picture);
+	Pixel secondPixel;
+	Pixel centerPixel;
 
 	int step = 0;
 	while (step < countOfSteps){
@@ -44,6 +46,6 @@ static void symulation(int countOfSteps, TrianglePicture picture){
 	}
 }
 
-
+*/
 
 
