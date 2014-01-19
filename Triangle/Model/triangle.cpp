@@ -9,8 +9,6 @@
 #include<iostream>
 #include<cstdlib>
 #include <assert.h>
-typedef struct triangle trainglePicture;
-typedef struct pixel pixel;
 typedef int color;
 
 struct pixel{
@@ -19,9 +17,8 @@ struct pixel{
 	int coordinateY;
 };
 ///////////////////////////Create a user input size
-//int size;
-//cout << "Enter Size Of Array : ";
-//cin >> size;
+//int size = 5;
+
 //Create the array with the size the user input
 //	int *myArray = new int[size];
 //Delete the array
@@ -35,14 +32,17 @@ struct triangle{
 	pixel B;
 	pixel C;
 	//pixel content [][];
-	pixel **content;
+	//pixel **content;
+	// starats fro one dim. array
 };
 
 TrianglePicture newTrianglePicture(int width,int height){
 	assert(width > 0); assert(height > 0);
 
 	TrianglePicture picture;
-	picture = (TrianglePicture *)malloc(sizeof(trainglePicture));
+	picture = (triangle *)malloc(sizeof (triangle));
+	//Exception catcher
+	assert(picture != NULL);
 
 	return picture;
 }
