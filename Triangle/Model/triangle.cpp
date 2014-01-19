@@ -18,6 +18,18 @@ struct pixel{
 	int coordinateX;
 	int coordinateY;
 };
+///////////////////////////Create a user input size
+//int size;
+//cout << "Enter Size Of Array : ";
+//cin >> size;
+//Create the array with the size the user input
+//	int *myArray = new int[size];
+//Delete the array
+//	delete[] myArray;
+//---------------- in C ----------
+//int *myArray = (int *) malloc(size*2);
+//char *myChar = (char *) malloc(size);
+
 struct triangle{
 	pixel A;
 	pixel B;
