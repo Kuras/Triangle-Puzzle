@@ -32,7 +32,7 @@ struct triangle{
 	pixel B;
 	pixel C;
 	//pixel content [][];
-	//pixel **content;
+	pixel **content;
 	// starats fro one dim. array
 };
 
@@ -43,6 +43,11 @@ TrianglePicture newTrianglePicture(int width,int height){
 	picture = (triangle *)malloc(sizeof (triangle));
 	//Exception catcher
 	assert(picture != NULL);
+	//create pixel grid with certain size
+	pixel *contentRow = (pixel *)malloc(width * sizeof (pixel));
+	assert(contentRow != NULL);
+	picture->content = (pixel **)malloc(height * sizeof (contentRow));
+	assert(picture->content != NULL);
 
 	return picture;
 }
