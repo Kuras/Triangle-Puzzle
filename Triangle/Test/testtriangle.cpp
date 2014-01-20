@@ -25,6 +25,6 @@ static void testNewDeleteTrianglePicture(){
 	picture = newTrianglePicture(2,3);
 	assert(picture != NULL);
 
-	deleteTrianglePicture(picture);
+//	deleteTrianglePicture(picture);
 }
 

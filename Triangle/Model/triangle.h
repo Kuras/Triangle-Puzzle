@@ -37,3 +37,5 @@ void drawLine(Pixel pixelStart, Pixel pixelEnd, TrianglePicture picture);
 
 // write picture in file with ppm format
 void savePictureOnDisc(TrianglePicture picture);
+
+void myTests();

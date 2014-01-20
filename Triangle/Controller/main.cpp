@@ -13,11 +13,12 @@ using namespace std;
 int steps = 1000000;
 int width = 1000;
 int hight = 1000;
-static void symulation(int countOfSteps, TrianglePicture picture);
+//static void symulation(int countOfSteps, TrianglePicture picture);
 
 int main (void){
 
 	testTrianglePuzzle();
+	myTests();
 /*	TrianglePicture picture;
 	picture = newTrianglePicture(width,hight);
 
