@@ -5,11 +5,11 @@
  *      Author: Baraka
  */
 
-#define WHITE 0
-#define BLACK 1
+
 typedef struct pixel *Pixel;
 typedef struct triangle *TrianglePicture;
-
+#define WHITE 0
+#define BLACK 1
 //assumes that width and height are pozitive number
 //returns grid of pixeles with given size
 TrianglePicture newTrianglePicture(int width,int height);
