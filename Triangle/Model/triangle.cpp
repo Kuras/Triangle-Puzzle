@@ -28,6 +28,8 @@ struct triangle{
 static gridPixel getPixelGrid(int width,int height);
 static void testGetDeletePixelGrid();
 static void deletePixelGrid(gridPixel grid,int width,int height);
+static void setUpPixelGrid(TrianglePicture picture,int width,int height);
+
 TrianglePicture newTrianglePicture(int width,int height){
 	assert(width > 0); assert(height > 0);
 
@@ -38,6 +40,7 @@ TrianglePicture newTrianglePicture(int width,int height){
 	picture->content = getPixelGrid(width,height);
 	assert(picture->content != NULL);
 
+	setUpPixelGrid(picture,width,height);
 
 	return picture;
 }
@@ -76,4 +79,32 @@ static void deletePixelGrid(gridPixel grid,int width,int height){
 	}
 	free(grid);
 	grid = NULL;
+}
+
+static void setUpPixelGrid(TrianglePicture picture,int width,int height){
+	picture->C.coordinateY = 0;
+	picture->C.coordinateX = width/2;
+	picture->C.monochromatic = BLACK;
+
+	picture->B.coordinateY = height - 1;
+	picture->B.coordinateX = width  - 1;
+	picture->B.monochromatic = BLACK;
+
+	picture->A.coordinateY = height - 1;
+	picture->A.coordinateX = 0;
+	picture->A.monochromatic = BLACK;
+	int i = 0;
+	int j = 0;
+	while (i < height){
+		while(j < width){
+			picture->content[i][j].coordinateY = i;
+			picture->content[i][j].coordinateX = j;
+			picture->content[i][j].monochromatic = WHITE;
+			j++;
+		}
+		i++;
+	}
+	picture->content[picture->A.coordinateY][picture->A.coordinateX].monochromatic = BLACK;
+	picture->content[picture->B.coordinateY][picture->B.coordinateX].monochromatic = BLACK;
+	picture->content[picture->C.coordinateY][picture->C.coordinateX].monochromatic = BLACK;
 }
