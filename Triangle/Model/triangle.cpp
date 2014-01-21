@@ -78,6 +78,7 @@ static gridPixel getPixelGrid(int width,int height){
 		grid[i] = (arrayPixel)malloc(width * sizeof (pixel));
 		i++;
 	}
+	assert(i == height);
 	return grid;
 }
 
@@ -87,6 +88,7 @@ static void deletePixelGrid(gridPixel grid,int width,int height){
 		free(grid[i]);
 		i++;
 	}
+	assert(i == height);
 	free(grid);
 	grid = NULL;
 }
@@ -114,6 +116,7 @@ static void setUpPixelGrid(TrianglePicture picture,int width,int height){
 		}
 		i++;
 	}
+	assert(i == height);assert(j == width);
 	picture->content[picture->A.coordinateY][picture->A.coordinateX].monochromatic = BLACK;
 	picture->content[picture->B.coordinateY][picture->B.coordinateX].monochromatic = BLACK;
 	picture->content[picture->C.coordinateY][picture->C.coordinateX].monochromatic = BLACK;
@@ -126,6 +129,8 @@ void setPixel(TrianglePicture picture,int x,int y){
 }
 
 Pixel getPixel(TrianglePicture picture,int x,int y){
+	assert(x >= 0);assert(y >= 0);
+	assert(x < picture->width);assert(y < picture->height);
 	Pixel pixelFromGrid;
 	pixelFromGrid = &(picture->content[y][x]);
 	return pixelFromGrid;
