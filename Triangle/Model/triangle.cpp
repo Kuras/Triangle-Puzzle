@@ -9,7 +9,6 @@
 #include<iostream>
 #include<cstdlib>
 #include <assert.h>
-typedef int color;
 typedef pixel *arrayPixel;
 typedef arrayPixel *gridPixel;
 
@@ -19,6 +18,8 @@ struct pixel{
 	int coordinateY;
 };
 struct triangle{
+	int width;
+	int height;
 	pixel A;
 	pixel B;
 	pixel C;
@@ -37,6 +38,8 @@ TrianglePicture newTrianglePicture(int width,int height){
 	picture = (triangle *)malloc(sizeof (triangle));
 	//Exception catcher
 	assert(picture != NULL);
+	picture->width = width;
+	picture->height= height;
 	picture->content = getPixelGrid(width,height);
 	assert(picture->content != NULL);
 
@@ -44,6 +47,13 @@ TrianglePicture newTrianglePicture(int width,int height){
 
 	return picture;
 }
+
+void deleteTrianglePicture(TrianglePicture picture){
+	deletePixelGrid(picture->content,picture->width,picture->height);
+	free (picture);
+	picture = NULL;
+}
+
 
 void myTests(){
 	std::cout << "Starting my testing...\n";
@@ -107,4 +117,21 @@ static void setUpPixelGrid(TrianglePicture picture,int width,int height){
 	picture->content[picture->A.coordinateY][picture->A.coordinateX].monochromatic = BLACK;
 	picture->content[picture->B.coordinateY][picture->B.coordinateX].monochromatic = BLACK;
 	picture->content[picture->C.coordinateY][picture->C.coordinateX].monochromatic = BLACK;
+}
+void setPixel(TrianglePicture picture,int x,int y){
+	assert(x >= 0);assert(y >= 0);
+	assert(x < picture->width);assert(y < picture->height);
+
+	picture->content[y][x].monochromatic = BLACK;
+}
+
+Pixel getPixel(TrianglePicture picture,int x,int y){
+	Pixel pixelFromGrid;
+	pixelFromGrid = &(picture->content[y][x]);
+	return pixelFromGrid;
+}
+color getColorPixel(Pixel pixelTriangle){
+	color colorPixel;
+	colorPixel = pixelTriangle->monochromatic;
+	return colorPixel;
 }

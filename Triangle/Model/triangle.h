@@ -8,8 +8,10 @@
 
 typedef struct pixel *Pixel;
 typedef struct triangle *TrianglePicture;
+typedef int color;
 #define WHITE 0
 #define BLACK 1
+
 //assumes that width and height are pozitive number
 //returns grid of pixeles with given size
 TrianglePicture newTrianglePicture(int width,int height);
@@ -18,12 +20,15 @@ TrianglePicture newTrianglePicture(int width,int height);
 void deleteTrianglePicture(TrianglePicture picture);
 
 //color poixel in position x,y on black
-//assume that x and y are possitive
+//assume that x and y are not negative and right range
 void setPixel(TrianglePicture picture,int x,int y);
 
-//returns pixel for given location in grid
+// returns pointer on pixel for given location in grid
 // assumes that x and y are in right range
 Pixel getPixel(TrianglePicture picture,int x,int y);
+
+// returns color from given Pixel
+color getColorPixel(Pixel pixelTriangle);
 
 //returns one of three vertex(pixel) of Triangle ABC
 Pixel getRandomPixel(TrianglePicture picture);
