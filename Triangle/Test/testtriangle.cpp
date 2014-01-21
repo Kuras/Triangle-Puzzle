@@ -13,12 +13,12 @@
 using namespace std;
 
 static void testNewDeleteTrianglePicture();
-static void testSetGetPixel();
+static void testGetSetGetColorPixel();
 void testTrianglePuzzle(){
 	cout << "Testing is started...\n";
 
 	testNewDeleteTrianglePicture();
-	testSetGetPixel();
+	testGetSetGetColorPixel();
 
 	cout << "All test passed :) yea\n";
 }
@@ -30,14 +30,37 @@ static void testNewDeleteTrianglePicture(){
 	deleteTrianglePicture(picture);
 }
 
-static void testSetGetPixel(){
-	cout << "	testing setPisel function\n";
+static void testGetSetGetColorPixel(){
+	cout << "	testing setPisel, getPixel, getColorPixel functions\n";
 	TrianglePicture picture;
-	picture = newTrianglePicture(2,3);
+	picture = newTrianglePicture(10,10);
+	color colorPixel;
+	Pixel pixelFromGrid;
 
 	setPixel(picture,0,0);
-	Pixel pixelFromGrid = getPixel(picture,0,0);
-	color colorPixel = getColorPixel(pixelFromGrid);
+	pixelFromGrid = getPixel(picture,0,0);
+	colorPixel = getColorPixel(pixelFromGrid);
+	assert( colorPixel == BLACK);
+
+	pixelFromGrid = getPixel(picture,9,0);
+	colorPixel = getColorPixel(pixelFromGrid);
+	assert(colorPixel == WHITE);
+
+	pixelFromGrid = getPixel(picture,9,9);
+	colorPixel = getColorPixel(pixelFromGrid);
+	assert(colorPixel == BLACK);
+
+	pixelFromGrid = getPixel(picture,10/2,0);
+	colorPixel = getColorPixel(pixelFromGrid);
+	assert(colorPixel == BLACK);
+
+	pixelFromGrid = getPixel(picture,0,9);
+	colorPixel = getColorPixel(pixelFromGrid);
+	assert(colorPixel == BLACK);
+
+	setPixel(picture,5,5);
+	pixelFromGrid = getPixel(picture,5,5);
+	colorPixel = getColorPixel(pixelFromGrid);
 	assert( colorPixel == BLACK);
 
 	deleteTrianglePicture(picture);
