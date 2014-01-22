@@ -74,17 +74,33 @@ static void testGetRandomPixel() {
 	cout << "	testing getRandomPixel\n";
 
 	TrianglePicture picture = newTrianglePicture(20, 30);
-	Pixel randPixel;
+	Pixel randPixel = getRandomPixel(picture);
 	bool isVertex;
+
+	srand(1);
+	int randVertex = rand() % 3;
+	switch (randVertex) {
+	case 0:
+		assert(randPixel == getPixel(picture, 0, 29));
+		break;
+	case 1:
+		assert(randPixel == getPixel(picture, 19, 29));
+		break;
+	case 2:
+		assert(randPixel == getPixel(picture, 10, 0));
+		break;
+	}
 	//getPixel(picture,0,29);//A
 	//getPixel(picture,19,29);//B
 	//getPixel(picture,10,0);//C
 	int counterTest = 0;
-		while (counterTest < NUM_OF_TESTS_RAND) {
-			randPixel = getRandomPixel(picture);
-			isVertex = (getPixel(picture,0,29) == randPixel)||(getPixel(picture,19,29) == randPixel)||(getPixel(picture,10,0) == randPixel);
-			assert(isVertex);
-			counterTest++;
-		}
+	while (counterTest < NUM_OF_TESTS_RAND) {
+		randPixel = getRandomPixel(picture);
+		isVertex = (getPixel(picture, 0, 29) == randPixel)
+				|| (getPixel(picture, 19, 29) == randPixel)
+				|| (getPixel(picture, 10, 0) == randPixel);
+		assert(isVertex);
+		counterTest++;
+	}
 
 }

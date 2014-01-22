@@ -151,7 +151,6 @@ Pixel getRandomPixel(TrianglePicture picture) {
 
 	//srand(time(NULL));
 	int randVertex = rand() % 3;
-std::cout << randVertex << std::endl;
 	switch (randVertex) {
 	case vertexA:
 		randPixel = picture->A;
