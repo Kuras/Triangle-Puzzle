@@ -148,7 +148,6 @@ Pixel getRandomPixel(TrianglePicture picture) {
 	enum {
 		vertexA, vertexB, vertexC
 	};
-
 	//srand(time(NULL));
 	int randVertex = rand() % 3;
 	switch (randVertex) {
