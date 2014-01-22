@@ -8,7 +8,8 @@
 #include "triangle.h"
 #include<iostream>
 #include<cstdlib>
-#include <assert.h>
+#include <cassert>
+#include <ctime>
 typedef pixel *arrayPixel;
 typedef arrayPixel *gridPixel;
 
@@ -20,9 +21,9 @@ struct pixel{
 struct triangle{
 	int width;
 	int height;
-	pixel A;
-	pixel B;
-	pixel C;
+	Pixel A;
+	Pixel B;
+	Pixel C;
 	gridPixel content;
 };
 
@@ -94,17 +95,15 @@ static void deletePixelGrid(gridPixel grid,int width,int height){
 }
 
 static void setUpPixelGrid(TrianglePicture picture,int width,int height){
-	picture->C.coordinateY = 0;
-	picture->C.coordinateX = width/2;
-	picture->C.monochromatic = BLACK;
 
-	picture->B.coordinateY = height - 1;
-	picture->B.coordinateX = width  - 1;
-	picture->B.monochromatic = BLACK;
+	picture->content[height - 1][0].monochromatic = BLACK;
+	picture->content[height - 1][width - 1].monochromatic = BLACK;
+	picture->content[0][width/2].monochromatic = BLACK;
 
-	picture->A.coordinateY = height - 1;
-	picture->A.coordinateX = 0;
-	picture->A.monochromatic = BLACK;
+	picture->C = &(picture->content[0][width/2]);
+	picture->B = &(picture->content[height - 1][width - 1]);
+	picture->A = &(picture->content[0][width/2]);
+
 	int i = 0;
 	int j = 0;
 	while (i < height){
@@ -117,9 +116,6 @@ static void setUpPixelGrid(TrianglePicture picture,int width,int height){
 		i++;
 	}
 	assert(i == height);assert(j == width);
-	picture->content[picture->A.coordinateY][picture->A.coordinateX].monochromatic = BLACK;
-	picture->content[picture->B.coordinateY][picture->B.coordinateX].monochromatic = BLACK;
-	picture->content[picture->C.coordinateY][picture->C.coordinateX].monochromatic = BLACK;
 }
 void setPixel(TrianglePicture picture,int x,int y){
 	assert(x >= 0);assert(y >= 0);
@@ -139,4 +135,24 @@ color getColorPixel(Pixel pixelTriangle){
 	color colorPixel;
 	colorPixel = pixelTriangle->monochromatic;
 	return colorPixel;
+}
+
+Pixel getRandomPixel(TrianglePicture picture){
+	Pixel randPixel;
+	enum {vertexA, vertexB, vertexC};
+
+	srand(time(NULL));
+	int randVertex = rand() % 3;
+
+	switch (randVertex){
+		case vertexA : randPixel = picture->A;
+		break;
+		case vertexB : randPixel = picture->B;
+		break;
+		case vertexC : randPixel = picture->C;
+		break;
+		default : randPixel = picture->A;
+	}
+
+	return randPixel;
 }

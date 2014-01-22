@@ -14,11 +14,14 @@ using namespace std;
 
 static void testNewDeleteTrianglePicture();
 static void testGetSetGetColorPixel();
+static void testGetRandomPixel();
+
 void testTrianglePuzzle(){
 	cout << "Testing is started...\n";
 
 	testNewDeleteTrianglePicture();
 	testGetSetGetColorPixel();
+//	testGetRandomPixel();
 
 	cout << "All test passed :) yea\n";
 }
@@ -64,5 +67,18 @@ static void testGetSetGetColorPixel(){
 	assert( colorPixel == BLACK);
 
 	deleteTrianglePicture(picture);
+
+}
+static void testGetRandomPixel(){
+	cout << "	testing getRandomPixel";
+
+	TrianglePicture picture = newTrianglePicture(20,30);
+	Pixel randPixel = getRandomPixel(picture);
+	bool isVertex;
+	//getPixel(picture,0,29);//A
+	//getPixel(picture,19,29);//B
+	//getPixel(picture,10,0);//C
+	isVertex = (getPixel(picture,0,29) == randPixel)||(getPixel(picture,19,29) == randPixel)||(getPixel(picture,10,0) == randPixel);
+	assert(isVertex);
 
 }
