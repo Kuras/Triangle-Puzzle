@@ -10,75 +10,81 @@
 #include<iostream>
 #include<cstdlib>
 #include<assert.h>
+#define NUM_OF_TESTS_RAND 100
 using namespace std;
 
 static void testNewDeleteTrianglePicture();
 static void testGetSetGetColorPixel();
 static void testGetRandomPixel();
 
-void testTrianglePuzzle(){
+void testTrianglePuzzle() {
 	cout << "Testing is started...\n";
 
 	testNewDeleteTrianglePicture();
 	testGetSetGetColorPixel();
-//	testGetRandomPixel();
+	testGetRandomPixel();
 
 	cout << "All test passed :) yea\n";
 }
-static void testNewDeleteTrianglePicture(){
+static void testNewDeleteTrianglePicture() {
 	TrianglePicture picture;
-	picture = newTrianglePicture(2,3);
+	picture = newTrianglePicture(2, 3);
 	assert(picture != NULL);
 
 	deleteTrianglePicture(picture);
 }
 
-static void testGetSetGetColorPixel(){
+static void testGetSetGetColorPixel() {
 	cout << "	testing setPisel, getPixel, getColorPixel functions\n";
 	TrianglePicture picture;
-	picture = newTrianglePicture(10,10);
+	picture = newTrianglePicture(10, 10);
 	color colorPixel;
 	Pixel pixelFromGrid;
 
-	setPixel(picture,0,0);
-	pixelFromGrid = getPixel(picture,0,0);
+	setPixel(picture, 0, 0);
+	pixelFromGrid = getPixel(picture, 0, 0);
 	colorPixel = getColorPixel(pixelFromGrid);
-	assert( colorPixel == BLACK);
+	assert(colorPixel == BLACK);
 
-	pixelFromGrid = getPixel(picture,9,0);
+	pixelFromGrid = getPixel(picture, 9, 0);
 	colorPixel = getColorPixel(pixelFromGrid);
 	assert(colorPixel == WHITE);
 
-	pixelFromGrid = getPixel(picture,9,9);
+	pixelFromGrid = getPixel(picture, 9, 9);
 	colorPixel = getColorPixel(pixelFromGrid);
 	assert(colorPixel == BLACK);
 
-	pixelFromGrid = getPixel(picture,10/2,0);
+	pixelFromGrid = getPixel(picture, 10 / 2, 0);
 	colorPixel = getColorPixel(pixelFromGrid);
 	assert(colorPixel == BLACK);
 
-	pixelFromGrid = getPixel(picture,0,9);
+	pixelFromGrid = getPixel(picture, 0, 9);
 	colorPixel = getColorPixel(pixelFromGrid);
 	assert(colorPixel == BLACK);
 
-	setPixel(picture,5,5);
-	pixelFromGrid = getPixel(picture,5,5);
+	setPixel(picture, 5, 5);
+	pixelFromGrid = getPixel(picture, 5, 5);
 	colorPixel = getColorPixel(pixelFromGrid);
-	assert( colorPixel == BLACK);
+	assert(colorPixel == BLACK);
 
 	deleteTrianglePicture(picture);
 
 }
-static void testGetRandomPixel(){
-	cout << "	testing getRandomPixel";
+static void testGetRandomPixel() {
+	cout << "	testing getRandomPixel\n";
 
-	TrianglePicture picture = newTrianglePicture(20,30);
-	Pixel randPixel = getRandomPixel(picture);
+	TrianglePicture picture = newTrianglePicture(20, 30);
+	Pixel randPixel;
 	bool isVertex;
 	//getPixel(picture,0,29);//A
 	//getPixel(picture,19,29);//B
 	//getPixel(picture,10,0);//C
-	isVertex = (getPixel(picture,0,29) == randPixel)||(getPixel(picture,19,29) == randPixel)||(getPixel(picture,10,0) == randPixel);
-	assert(isVertex);
+	int counterTest = 0;
+		while (counterTest < NUM_OF_TESTS_RAND) {
+			randPixel = getRandomPixel(picture);
+			isVertex = (getPixel(picture,0,29) == randPixel)||(getPixel(picture,19,29) == randPixel)||(getPixel(picture,10,0) == randPixel);
+			assert(isVertex);
+			counterTest++;
+		}
 
 }
