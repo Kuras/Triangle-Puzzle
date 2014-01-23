@@ -146,18 +146,18 @@ color getColorPixel(Pixel pixelTriangle) {
 Pixel getRandomPixel(TrianglePicture picture) {
 	Pixel randPixel;
 	enum {
-		vertexA, vertexB, vertexC
+		VERTEX_A, VERTEX_B, VERTEX_C
 	};
 	//srand(time(NULL));
 	int randVertex = rand() % 3;
 	switch (randVertex) {
-	case vertexA:
+	case VERTEX_A:
 		randPixel = picture->A;
 		break;
-	case vertexB:
+	case VERTEX_B:
 		randPixel = picture->B;
 		break;
-	case vertexC:
+	case VERTEX_C:
 		randPixel = picture->C;
 		break;
 	default:
