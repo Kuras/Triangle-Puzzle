@@ -30,12 +30,12 @@ Pixel getPixel(TrianglePicture picture,int x,int y);
 // returns color from given Pixel*
 color getColorPixel(Pixel pixelTriangle);
 
-//returns one of three vertex(pixel) of Triangle ABC
+//returns one of three vertex(pixel) of Triangle ABC*
 Pixel getRandomPixel(TrianglePicture picture);
 
-// assumes that pixel are from picture
+// assumes that pixel are from picture*
 // returns pixel witch is on the medium of line between two given pixels
-Pixel getCenterOF(Pixel pixelStart, Pixel pixelEnd, TrianglePicture picture);
+Pixel getCenterOF(TrianglePicture picture, Pixel pixelStart, Pixel pixelEnd);
 
 // draw line in picture between two given pixels (DDA)-algorithm
 void drawLine(Pixel pixelStart, Pixel pixelEnd, TrianglePicture picture);

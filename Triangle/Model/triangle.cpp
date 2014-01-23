@@ -31,7 +31,7 @@ static gridPixel getPixelGrid(int width, int height);
 static void testGetDeletePixelGrid();
 static void deletePixelGrid(gridPixel grid, int width, int height);
 static void setUpPixelGrid(TrianglePicture picture, int width, int height);
-
+static void showPixelGrid(TrianglePicture picture);
 TrianglePicture newTrianglePicture(int width, int height) {
 	assert(width > 0);
 	assert(height > 0);
@@ -46,6 +46,7 @@ TrianglePicture newTrianglePicture(int width, int height) {
 	assert(picture->content != NULL);
 
 	setUpPixelGrid(picture, width, height);
+//	showPixelGrid(picture);
 
 	return picture;
 }
@@ -74,9 +75,11 @@ static void testGetDeletePixelGrid() {
 static gridPixel getPixelGrid(int width, int height) {
 	gridPixel grid;
 	grid = (gridPixel) malloc(height * sizeof(arrayPixel));
+	assert(grid != NULL);
 	int i = 0;
 	while (i < height) {
 		grid[i] = (arrayPixel) malloc(width * sizeof(pixel));
+		assert(grid[i] != NULL);
 		i++;
 	}
 	assert(i == height);
@@ -99,6 +102,7 @@ static void setUpPixelGrid(TrianglePicture picture, int width, int height) {
 	int i = 0;
 	int j = 0;
 	while (i < height) {
+		j = 0;
 		while (j < width) {
 			picture->content[i][j].coordinateY = i;
 			picture->content[i][j].coordinateX = j;
@@ -135,6 +139,7 @@ Pixel getPixel(TrianglePicture picture, int x, int y) {
 	assert(y < picture->height);
 	Pixel pixelFromGrid;
 	pixelFromGrid = &(picture->content[y][x]);
+
 	return pixelFromGrid;
 }
 color getColorPixel(Pixel pixelTriangle) {
@@ -165,4 +170,45 @@ Pixel getRandomPixel(TrianglePicture picture) {
 	}
 
 	return randPixel;
+}
+
+Pixel getCenterOF(TrianglePicture picture, Pixel pixelStart, Pixel pixelEnd) {
+	Pixel centerPixel;
+	int centerOfXline, centerOfYline;
+	if (pixelStart->coordinateX <= pixelEnd->coordinateX) {
+		centerOfXline = pixelStart->coordinateX
+				+ (pixelEnd->coordinateX - pixelStart->coordinateX) / 2;
+	} else {
+		centerOfXline = pixelEnd->coordinateX
+				+ (pixelStart->coordinateX - pixelEnd->coordinateX) / 2;
+	}
+
+	if (pixelStart->coordinateY <= pixelEnd->coordinateY) {
+		centerOfYline = ((pixelEnd->coordinateY - pixelStart->coordinateY) / 2)
+				+ pixelStart->coordinateY;
+	} else {
+		centerOfYline = ((pixelStart->coordinateY - pixelEnd->coordinateY) / 2)
+				+ pixelEnd->coordinateY;
+	}
+	centerPixel = getPixel(picture, centerOfXline, centerOfYline);
+	return centerPixel;
+}
+
+static void showPixelGrid(TrianglePicture picture) {
+	int i = 0;
+	int j = 0;
+	while (i < picture->height) {
+		j = 0;
+		while (j < picture->width) {
+			std::cout << "(" << picture->content[i][j].coordinateY << ","
+					<< picture->content[i][j].coordinateX << ")";
+			//std::cout << "("<< i << ","<< j << ")";
+			j++;
+		}
+		std::cout << "\n";
+		i++;
+	}
+	assert(i == picture->height);
+	assert(j == picture->width);
+
 }

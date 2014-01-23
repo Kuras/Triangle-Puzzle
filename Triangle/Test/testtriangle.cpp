@@ -16,19 +16,20 @@ using namespace std;
 static void testNewDeleteTrianglePicture();
 static void testGetSetGetColorPixel();
 static void testGetRandomPixel();
-
+static void testGetCenterOF();
 void testTrianglePuzzle() {
 	cout << "Testing is started...\n";
 
 	testNewDeleteTrianglePicture();
 	testGetSetGetColorPixel();
 	testGetRandomPixel();
+	testGetCenterOF();
 
 	cout << "All test passed :) yea\n";
 }
 static void testNewDeleteTrianglePicture() {
 	TrianglePicture picture;
-	picture = newTrianglePicture(2, 3);
+	picture = newTrianglePicture(20,30);
 	assert(picture != NULL);
 
 	deleteTrianglePicture(picture);
@@ -67,6 +68,11 @@ static void testGetSetGetColorPixel() {
 	colorPixel = getColorPixel(pixelFromGrid);
 	assert(colorPixel == BLACK);
 
+	setPixel(picture, 0, 4);
+	pixelFromGrid = getPixel(picture, 0, 4);
+	colorPixel = getColorPixel(pixelFromGrid);
+	assert(colorPixel == BLACK);
+
 	deleteTrianglePicture(picture);
 
 }
@@ -102,5 +108,59 @@ static void testGetRandomPixel() {
 		assert(isVertex);
 		counterTest++;
 	}
+	deleteTrianglePicture(picture);
+}
+static void testGetCenterOF() {
+	cout << "	testing getCenterOf function...\n";
+	TrianglePicture picture = newTrianglePicture(20, 30);
+	// centor of horizontal line
+	Pixel startPixel, endPixel, midlePixel;
+	startPixel = getPixel(picture, 0, 0);
+	endPixel = getPixel(picture, 19, 0);
+	midlePixel = getPixel(picture, 9, 0);	//19 - 0 / 2
+	assert(midlePixel == getCenterOF(picture,startPixel,endPixel));
+	// 15 ----- 2
+	startPixel = getPixel(picture, 15, 0);
+	endPixel = getPixel(picture, 2, 0);
+	midlePixel = getPixel(picture, 8, 0);		//2 + 15 - 2 / 2
+	assert(midlePixel == getCenterOF(picture,startPixel,endPixel));
+	// center of vertical line
+	// 0 ------ 29
+	startPixel = getPixel(picture, 0, 0);
+	endPixel = getPixel(picture, 0, 29);
+	midlePixel = getPixel(picture,0,14);//|2 - 0| / 2
+	assert(midlePixel == getCenterOF(picture,startPixel,endPixel));
+	// 6 ------ 21
+	startPixel = getPixel(picture, 0, 20);
+	endPixel = getPixel(picture, 0, 5);
+	midlePixel = getPixel(picture, 0, 12);	    // 5 + (|5 - 20| / 2)
+	assert(midlePixel == getCenterOF(picture,startPixel,endPixel));
+	// for any line
+	startPixel = getPixel(picture, 5, 5);
+	endPixel = getPixel(picture, 10, 10);
+	midlePixel = getPixel(picture, 7, 7);
+	assert(midlePixel == getCenterOF(picture,startPixel,endPixel));
 
+	startPixel = getPixel(picture, 5, 10);
+	endPixel = getPixel(picture, 10, 5);
+	midlePixel = getPixel(picture, 7, 7);
+	assert(midlePixel == getCenterOF(picture,startPixel,endPixel));
+
+	startPixel = getPixel(picture, 12, 12);
+	endPixel = getPixel(picture, 12, 15);
+	midlePixel = getPixel(picture, 12, 13);
+	assert(midlePixel == getCenterOF(picture,startPixel,endPixel));
+
+	startPixel = getPixel(picture, 12, 15);
+	endPixel = getPixel(picture, 12, 12);
+	midlePixel = getPixel(picture, 12, 13);
+	assert(midlePixel == getCenterOF(picture,startPixel,endPixel));
+
+	startPixel = getPixel(picture, 0, 0);
+	endPixel = getPixel(picture, 0, 0);
+	midlePixel = getPixel(picture, 0, 0);
+	assert(midlePixel == getCenterOF(picture,startPixel,endPixel));
+
+
+	deleteTrianglePicture(picture);
 }
