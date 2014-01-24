@@ -179,6 +179,7 @@ static void testDrawLine() {
 	int i = 0;
 	while (i < 20) {
 		assert(getColorPixel (getPixel (picture,i,0)) == BLACK);
+		assert(getColorPixel (getPixel (picture,i,1)) == WHITE); // !!!!!!!!!
 		i++;
 	}
 
@@ -191,6 +192,8 @@ static void testDrawLine() {
 	i = 0;
 	while (i < 21) {
 		assert(getColorPixel (getPixel (picture,1,i)) == BLACK);
+		assert(getColorPixel (getPixel (picture,2,(i != 0 ? i: 1))) == WHITE);
+		assert(getColorPixel (getPixel (picture,0,(i != 0 ? i: 1))) == WHITE);
 		i++;
 	}
 
@@ -200,6 +203,8 @@ static void testDrawLine() {
 	endPixel = getPixel(picture, 2, 0);
 	drawLine(startPixel, endPixel, picture);
 	assert(getColorPixel (getPixel (picture,1,1)) == BLACK);
+	assert(getColorPixel (getPixel (picture,2,1)) == WHITE); // !!!!!!
+	assert(getColorPixel (getPixel (picture,0,1)) == WHITE); // !!!!!!
 	// case 4x2
 	// case 8x5
 	// case 2x9
