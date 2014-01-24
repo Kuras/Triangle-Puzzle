@@ -10,6 +10,7 @@
 #include<cstdlib>
 #include <cassert>
 #include <ctime>
+#include <cmath>
 typedef pixel *arrayPixel;
 typedef arrayPixel *gridPixel;
 
@@ -210,5 +211,46 @@ static void showPixelGrid(TrianglePicture picture) {
 	}
 	assert(i == picture->height);
 	assert(j == picture->width);
+
+}
+void drawLine(Pixel pixelStart, Pixel pixelEnd, TrianglePicture picture) {
+	Pixel startPixel, endPixel;
+	int diffInXLine, diffInYLine;
+	double angleOfInclination;
+
+	if (pixelStart->coordinateX <= pixelEnd->coordinateX) {
+		startPixel = pixelStart;
+		endPixel = pixelEnd;
+	} else {
+		startPixel = pixelEnd;
+		endPixel = pixelStart;
+	}
+	diffInXLine = endPixel->coordinateX - startPixel->coordinateX + 1;
+	if (endPixel->coordinateY <= startPixel->coordinateY) {
+		diffInYLine = startPixel->coordinateY - endPixel->coordinateY + 1;
+	} else {
+		diffInYLine = endPixel->coordinateY - startPixel->coordinateY + 1;
+		diffInYLine = -diffInYLine;
+	}
+	angleOfInclination = (double)diffInYLine / (double)diffInXLine;
+	int i = 0, j = 0;
+	if (fabs(angleOfInclination) <= 1) {
+		while (i < diffInXLine) {
+			setPixel(picture, startPixel->coordinateX + i,
+					(int)(startPixel->coordinateY + j));
+			i++;
+			j += angleOfInclination;
+		}
+		assert(i == diffInXLine);
+	} else {
+		angleOfInclination = 1.0 / angleOfInclination;
+		while (j < abs(diffInYLine)) {
+			setPixel(picture, (int)(startPixel->coordinateX + i),
+					startPixel->coordinateY + j);
+			j++;
+			i += angleOfInclination;
+		}
+		assert(j == abs(diffInYLine));
+	}
 
 }

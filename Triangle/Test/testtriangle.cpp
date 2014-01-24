@@ -17,6 +17,7 @@ static void testNewDeleteTrianglePicture();
 static void testGetSetGetColorPixel();
 static void testGetRandomPixel();
 static void testGetCenterOF();
+static void testDrawLine();
 void testTrianglePuzzle() {
 	cout << "Testing is started...\n";
 
@@ -24,12 +25,13 @@ void testTrianglePuzzle() {
 	testGetSetGetColorPixel();
 	testGetRandomPixel();
 	testGetCenterOF();
+	testDrawLine();
 
 	cout << "All test passed :) yea\n";
 }
 static void testNewDeleteTrianglePicture() {
 	TrianglePicture picture;
-	picture = newTrianglePicture(20,30);
+	picture = newTrianglePicture(20, 30);
 	assert(picture != NULL);
 
 	deleteTrianglePicture(picture);
@@ -118,49 +120,89 @@ static void testGetCenterOF() {
 	startPixel = getPixel(picture, 0, 0);
 	endPixel = getPixel(picture, 19, 0);
 	midlePixel = getPixel(picture, 9, 0);	//19 - 0 / 2
-	assert(midlePixel == getCenterOF(picture,startPixel,endPixel));
+	assert(midlePixel == getCenterOF(picture, startPixel, endPixel));
 	// 15 ----- 2
 	startPixel = getPixel(picture, 15, 0);
 	endPixel = getPixel(picture, 2, 0);
 	midlePixel = getPixel(picture, 8, 0);		//2 + 15 - 2 / 2
-	assert(midlePixel == getCenterOF(picture,startPixel,endPixel));
+	assert(midlePixel == getCenterOF(picture, startPixel, endPixel));
 	// center of vertical line
 	// 0 ------ 29
 	startPixel = getPixel(picture, 0, 0);
 	endPixel = getPixel(picture, 0, 29);
-	midlePixel = getPixel(picture,0,14);//|2 - 0| / 2
-	assert(midlePixel == getCenterOF(picture,startPixel,endPixel));
+	midlePixel = getPixel(picture, 0, 14);	//|2 - 0| / 2
+	assert(midlePixel == getCenterOF(picture, startPixel, endPixel));
 	// 6 ------ 21
 	startPixel = getPixel(picture, 0, 20);
 	endPixel = getPixel(picture, 0, 5);
 	midlePixel = getPixel(picture, 0, 12);	    // 5 + (|5 - 20| / 2)
-	assert(midlePixel == getCenterOF(picture,startPixel,endPixel));
+	assert(midlePixel == getCenterOF(picture, startPixel, endPixel));
 	// for any line
 	startPixel = getPixel(picture, 5, 5);
 	endPixel = getPixel(picture, 10, 10);
 	midlePixel = getPixel(picture, 7, 7);
-	assert(midlePixel == getCenterOF(picture,startPixel,endPixel));
+	assert(midlePixel == getCenterOF(picture, startPixel, endPixel));
 
 	startPixel = getPixel(picture, 5, 10);
 	endPixel = getPixel(picture, 10, 5);
 	midlePixel = getPixel(picture, 7, 7);
-	assert(midlePixel == getCenterOF(picture,startPixel,endPixel));
+	assert(midlePixel == getCenterOF(picture, startPixel, endPixel));
 
 	startPixel = getPixel(picture, 12, 12);
 	endPixel = getPixel(picture, 12, 15);
 	midlePixel = getPixel(picture, 12, 13);
-	assert(midlePixel == getCenterOF(picture,startPixel,endPixel));
+	assert(midlePixel == getCenterOF(picture, startPixel, endPixel));
 
 	startPixel = getPixel(picture, 12, 15);
 	endPixel = getPixel(picture, 12, 12);
 	midlePixel = getPixel(picture, 12, 13);
-	assert(midlePixel == getCenterOF(picture,startPixel,endPixel));
+	assert(midlePixel == getCenterOF(picture, startPixel, endPixel));
 
 	startPixel = getPixel(picture, 0, 0);
 	endPixel = getPixel(picture, 0, 0);
 	midlePixel = getPixel(picture, 0, 0);
-	assert(midlePixel == getCenterOF(picture,startPixel,endPixel));
-
+	assert(midlePixel == getCenterOF(picture, startPixel, endPixel));
 
 	deleteTrianglePicture(picture);
+}
+static void testDrawLine() {
+	cout << "	testing drawLine function...\n";
+
+	TrianglePicture picture = newTrianglePicture(20, 30);
+	Pixel startPixel, endPixel;
+	//--- test if draw horizontal line
+	startPixel = getPixel(picture, 0, 0);
+	endPixel = getPixel(picture, 19, 0);
+	drawLine(startPixel, endPixel, picture);
+	assert(getColorPixel (getPixel (picture,1,0)) == BLACK);
+	//if is consist and for every one pixel in horizontal line
+	int i = 0;
+	while (i < 20) {
+		assert(getColorPixel (getPixel (picture,i,0)) == BLACK);
+		i++;
+	}
+
+	//--- test if draw vertical line
+	startPixel = getPixel(picture, 1, 0);
+	endPixel = getPixel(picture, 1, 20);
+	drawLine(startPixel, endPixel, picture);
+	assert(getColorPixel (getPixel (picture,1,1)) == BLACK);
+	//if is consist and for every one pixel in horizontal line
+	i = 0;
+	while (i < 21) {
+		assert(getColorPixel (getPixel (picture,1,i)) == BLACK);
+		i++;
+	}
+
+	//--- test if draw cross line
+	// case 3x3
+	startPixel = getPixel(picture, 0, 2);
+	endPixel = getPixel(picture, 2, 0);
+	drawLine(startPixel, endPixel, picture);
+	assert(getColorPixel (getPixel (picture,1,1)) == BLACK);
+	// case 4x2
+	// case 8x5
+	// case 2x9
+	deleteTrianglePicture(picture);
+
 }
