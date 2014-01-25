@@ -171,7 +171,7 @@ static void testDrawLine() {
 	TrianglePicture picture = newTrianglePicture(20, 30);
 	Pixel startPixel, endPixel;
 	//--- test if draw horizontal line
-/*	startPixel = getPixel(picture, 0, 0);
+	startPixel = getPixel(picture, 0, 0);
 	endPixel = getPixel(picture, 19, 0);
 	drawLine(startPixel, endPixel, picture);
 	assert(getColorPixel (getPixel (picture,1,0)) == BLACK);
@@ -182,12 +182,35 @@ static void testDrawLine() {
 		assert(getColorPixel (getPixel (picture,i,1)) == WHITE); // !!!!!!!!!
 		i++;
 	}
-*/
+
+	startPixel = getPixel(picture, 19, 0);
+	endPixel = getPixel(picture, 0, 0);
+	drawLine(startPixel, endPixel, picture);
+	assert(getColorPixel (getPixel (picture,1,0)) == BLACK);
+	//if is consist and for every one pixel in horizontal line
+	i = 0;
+	while (i < 20) {
+		assert(getColorPixel (getPixel (picture,i,0)) == BLACK);
+		assert(getColorPixel (getPixel (picture,i,1)) == WHITE); // !!!!!!!!!
+		i++;
+	}
 	//--- test if draw vertical line
+	startPixel = getPixel(picture, 1, 20);
+	endPixel = getPixel(picture, 1, 0);
+	drawLine(startPixel, endPixel, picture);
+	assert(getColorPixel (getPixel (picture,1,1)) == BLACK);
+	//if is consist and for every one pixel in horizontal line
+	i = 0;
+	while (i < 21) {
+		assert(getColorPixel (getPixel (picture,1,i)) == BLACK);
+		assert(getColorPixel (getPixel (picture,2,(i != 0 ? i: 1))) == WHITE);
+		assert(getColorPixel (getPixel (picture,0,(i != 0 ? i: 1))) == WHITE);
+		i++;
+	}
 	startPixel = getPixel(picture, 1, 0);
 	endPixel = getPixel(picture, 1, 20);
 	drawLine(startPixel, endPixel, picture);
-	/*	assert(getColorPixel (getPixel (picture,1,1)) == BLACK);
+	assert(getColorPixel (getPixel (picture,1,1)) == BLACK);
 	//if is consist and for every one pixel in horizontal line
 	i = 0;
 	while (i < 21) {
@@ -222,15 +245,39 @@ static void testDrawLine() {
 	endPixel = getPixel(picture, 15, 9);
 	drawLine(startPixel, endPixel, picture);
 	assert(getColorPixel (getPixel (picture,12,10)) == BLACK);
-	assert(getColorPixel (getPixel (picture,13,10)) == BLACK);
 	assert(getColorPixel (getPixel (picture,12,9)) == WHITE);
+	assert(getColorPixel (getPixel (picture,13,10)) == BLACK);
 	assert(getColorPixel (getPixel (picture,13,9)) == WHITE);
-	assert(getColorPixel (getPixel (picture,14,9)) == WHITE);
-	assert(getColorPixel (getPixel (picture,15,10)) == BLACK);
-
-*/
+	assert(getColorPixel (getPixel (picture,14,9)) == BLACK);
+	assert(getColorPixel (getPixel (picture,14,10)) == WHITE);
+	assert(getColorPixel (getPixel (picture,15,9)) == BLACK);
+	assert(getColorPixel (getPixel (picture,15,10)) == WHITE);
 	// cause 8x5
+	startPixel = getPixel(picture, 12, 20);
+	endPixel = getPixel(picture, 19, 24);
+	drawLine(startPixel, endPixel, picture);
+	assert(getColorPixel (getPixel (picture,12,20)) == BLACK);
+	assert(getColorPixel (getPixel (picture,13,20)) == BLACK);
+	assert(getColorPixel (getPixel (picture,14,21)) == BLACK);
+	assert(getColorPixel (getPixel (picture,15,21)) == BLACK);
+	assert(getColorPixel (getPixel (picture,16,22)) == BLACK);
+	assert(getColorPixel (getPixel (picture,17,23)) == BLACK);
+	assert(getColorPixel (getPixel (picture,18,23)) == BLACK);
+	assert(getColorPixel (getPixel (picture,19,24)) == BLACK);
 	// cause 2x9
+	startPixel = getPixel(picture, 18, 29);
+	endPixel = getPixel(picture, 19, 21);
+	drawLine(startPixel, endPixel, picture);
+	assert(getColorPixel (getPixel (picture,18,29)) == BLACK);
+	assert(getColorPixel (getPixel (picture,18,28)) == BLACK);
+	assert(getColorPixel (getPixel (picture,18,27)) == BLACK);
+	assert(getColorPixel (getPixel (picture,18,26)) == BLACK);
+	assert(getColorPixel (getPixel (picture,18,25)) == BLACK);
+	assert(getColorPixel (getPixel (picture,19,24)) == BLACK);
+	assert(getColorPixel (getPixel (picture,19,23)) == BLACK);
+	assert(getColorPixel (getPixel (picture,19,21)) == BLACK);
+
+
 	deleteTrianglePicture(picture);
 
 }

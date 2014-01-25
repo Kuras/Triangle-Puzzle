@@ -218,7 +218,7 @@ void drawLine(Pixel pixelStart, Pixel pixelEnd, TrianglePicture picture) {
 	unsigned int diffInXLine, diffInYLine;
 	double angleOfInclination;
 
-	if (pixelStart->coordinateX <= pixelEnd->coordinateX) {
+	if (pixelStart->coordinateX < pixelEnd->coordinateX) {
 		startPixel = pixelStart;
 		endPixel = pixelEnd;
 	} else {
@@ -229,28 +229,37 @@ void drawLine(Pixel pixelStart, Pixel pixelEnd, TrianglePicture picture) {
 
 	if (startPixel->coordinateY <= endPixel->coordinateY) {
 		diffInYLine = endPixel->coordinateY - startPixel->coordinateY + 1;
-		angleOfInclination = (double)diffInYLine / (double)diffInXLine;
+		angleOfInclination = (double) diffInYLine / (double) diffInXLine;
 	} else {
 		diffInYLine = startPixel->coordinateY - endPixel->coordinateY + 1;
-		angleOfInclination = - (double)diffInYLine / (double)diffInXLine;
+		angleOfInclination = -(double) diffInYLine / (double) diffInXLine;
 	}
 	unsigned int i = 0, j = 0;
 	double increaser = 0.0;
 	if (fabs(angleOfInclination) <= 1) {
 		while (i < diffInXLine) {
 			setPixel(picture, startPixel->coordinateX + i,
-					startPixel->coordinateY + (int)increaser);
+					startPixel->coordinateY + (int) increaser);
 			i++;
 			increaser += angleOfInclination;
 		}
 		assert(i == diffInXLine);
 	} else {
-		angleOfInclination = 1.0 / angleOfInclination;
-		while (j < diffInYLine) {
-			setPixel(picture, startPixel->coordinateX + (int)increaser,
-					startPixel->coordinateY + j);
-			j++;
-			increaser += angleOfInclination;
+		angleOfInclination = fabs(1.0 / angleOfInclination);
+		if (startPixel->coordinateY < endPixel->coordinateY) {
+			while (j < diffInYLine) {
+				setPixel(picture, startPixel->coordinateX + (int) increaser,
+						startPixel->coordinateY + j);
+				j++;
+				increaser += angleOfInclination;
+			}
+		} else {
+			while (j < diffInYLine) {
+				setPixel(picture, startPixel->coordinateX + (int) increaser,
+						startPixel->coordinateY - j);
+				j++;
+				increaser += angleOfInclination;
+			}
 		}
 		assert(j == diffInYLine);
 	}
