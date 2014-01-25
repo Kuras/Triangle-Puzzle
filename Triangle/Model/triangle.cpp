@@ -229,10 +229,10 @@ void drawLine(Pixel pixelStart, Pixel pixelEnd, TrianglePicture picture) {
 
 	if (endPixel->coordinateY <= startPixel->coordinateY) {
 		diffInYLine = startPixel->coordinateY - endPixel->coordinateY + 1;
-		angleOfInclination = (double)diffInYLine / (double)diffInXLine;
+		angleOfInclination = - (double)diffInYLine / (double)diffInXLine;std::cout<< angleOfInclination<<std::endl;
 	} else {
 		diffInYLine = endPixel->coordinateY - startPixel->coordinateY + 1;
-		angleOfInclination = - (double)diffInYLine / (double)diffInXLine;
+		angleOfInclination = (double)diffInYLine / (double)diffInXLine;
 	}
 	unsigned int i = 0, j = 0;
 	if (fabs(angleOfInclination) <= 1) {
