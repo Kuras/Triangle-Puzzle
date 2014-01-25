@@ -11,6 +11,7 @@
 #include <cassert>
 #include <ctime>
 #include <cmath>
+#include <cstdio>
 typedef pixel *arrayPixel;
 typedef arrayPixel *gridPixel;
 
@@ -214,54 +215,65 @@ static void showPixelGrid(TrianglePicture picture) {
 
 }
 void drawLine(Pixel pixelStart, Pixel pixelEnd, TrianglePicture picture) {
-	Pixel startPixel, endPixel;
+	Pixel startPixel = pixelStart;
+	Pixel endPixel = pixelEnd;
 	unsigned int diffInXLine, diffInYLine;
+	int coeficient;
 	double angleOfInclination;
 
-	if (pixelStart->coordinateX < pixelEnd->coordinateX) {
-		startPixel = pixelStart;
-		endPixel = pixelEnd;
-	} else {
+	if (pixelStart->coordinateX >= pixelEnd->coordinateX) {
 		startPixel = pixelEnd;
 		endPixel = pixelStart;
 	}
-	diffInXLine = endPixel->coordinateX - startPixel->coordinateX + 1;
-
 	if (startPixel->coordinateY <= endPixel->coordinateY) {
-		diffInYLine = endPixel->coordinateY - startPixel->coordinateY + 1;
-		angleOfInclination = (double) diffInYLine / (double) diffInXLine;
+		coeficient = 1;
 	} else {
-		diffInYLine = startPixel->coordinateY - endPixel->coordinateY + 1;
-		angleOfInclination = -(double) diffInYLine / (double) diffInXLine;
+		coeficient = -1;
 	}
+	diffInXLine = abs(endPixel->coordinateX - startPixel->coordinateX) + 1;
+	diffInYLine = abs(endPixel->coordinateY - startPixel->coordinateY) + 1;
+	angleOfInclination = (double) diffInYLine / (double) diffInXLine;
 	unsigned int i = 0, j = 0;
 	double increaser = 0.0;
-	if (fabs(angleOfInclination) <= 1) {
+	if (angleOfInclination <= 1) {
 		while (i < diffInXLine) {
 			setPixel(picture, startPixel->coordinateX + i,
-					startPixel->coordinateY + (int) increaser);
+					startPixel->coordinateY + (int) increaser * coeficient);
 			i++;
 			increaser += angleOfInclination;
 		}
 		assert(i == diffInXLine);
 	} else {
-		angleOfInclination = fabs(1.0 / angleOfInclination);
-		if (startPixel->coordinateY < endPixel->coordinateY) {
-			while (j < diffInYLine) {
-				setPixel(picture, startPixel->coordinateX + (int) increaser,
-						startPixel->coordinateY + j);
-				j++;
-				increaser += angleOfInclination;
-			}
-		} else {
-			while (j < diffInYLine) {
-				setPixel(picture, startPixel->coordinateX + (int) increaser,
-						startPixel->coordinateY - j);
-				j++;
-				increaser += angleOfInclination;
-			}
+		angleOfInclination = 1.0 / angleOfInclination;
+		while (j < diffInYLine) {
+			setPixel(picture, startPixel->coordinateX + (int) increaser,
+					startPixel->coordinateY + j * coeficient);
+			j++;
+			increaser += angleOfInclination;
 		}
 		assert(j == diffInYLine);
 	}
 
+}
+
+void savePictureOnDisc(TrianglePicture picture) {
+	FILE *pictureFile;
+	pictureFile = fopen("trianglePicture.ppm", "w");
+	assert(pictureFile != NULL);
+	fputs("P1\n", pictureFile);
+	fprintf(pictureFile,"%d ",picture->width);
+	fprintf(pictureFile,"%d\n",picture->height);
+
+	int i = 0, j = 0;
+	while (i < picture->height) {
+		j = 0;
+		while (j < picture->width) {
+			putc(getColorPixel(getPixel(picture, j, i)), pictureFile);
+			j++;
+		}
+		i++;
+	}
+	fclose(pictureFile);
+	assert(i == picture->height);
+	assert(j == picture->width);
 }

@@ -10,6 +10,7 @@
 #include<iostream>
 #include<cstdlib>
 #include<assert.h>
+#include <cstdio>
 #define NUM_OF_TESTS_RAND 100
 using namespace std;
 
@@ -18,6 +19,8 @@ static void testGetSetGetColorPixel();
 static void testGetRandomPixel();
 static void testGetCenterOF();
 static void testDrawLine();
+static void testSavePictureOnDisc();
+
 void testTrianglePuzzle() {
 	cout << "Testing is started...\n";
 
@@ -26,6 +29,7 @@ void testTrianglePuzzle() {
 	testGetRandomPixel();
 	testGetCenterOF();
 	testDrawLine();
+	testSavePictureOnDisc();
 
 	cout << "All test passed :) yea\n";
 }
@@ -277,7 +281,35 @@ static void testDrawLine() {
 	assert(getColorPixel (getPixel (picture,19,23)) == BLACK);
 	assert(getColorPixel (getPixel (picture,19,21)) == BLACK);
 
-
 	deleteTrianglePicture(picture);
 
+}
+static void testSavePictureOnDisc() {
+	cout << "	testing savePictereOnDisc function...\n";
+	TrianglePicture picture = newTrianglePicture(6,10);
+	FILE *pictureFile;
+
+	savePictureOnDisc(picture);
+	pictureFile = fopen("trianglePicture.ppm", "r");
+	assert(picture != NULL);
+	fgetc(pictureFile);
+	fgetc(pictureFile);
+	fgetc(pictureFile);
+	fgetc(pictureFile);
+	fgetc(pictureFile);
+	fgetc(pictureFile);
+	fgetc(pictureFile);
+	fgetc(pictureFile);
+	int i=0, j=0;
+	while (i<10){
+		j=0;
+		while (j<6){
+			assert(getColorPixel(getPixel(picture,j,i)) == fgetc(pictureFile));
+			j++;
+		}
+		i++;
+	}
+	fclose(pictureFile);
+
+	deleteTrianglePicture(picture);
 }
