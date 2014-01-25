@@ -227,29 +227,30 @@ void drawLine(Pixel pixelStart, Pixel pixelEnd, TrianglePicture picture) {
 	}
 	diffInXLine = endPixel->coordinateX - startPixel->coordinateX + 1;
 
-	if (endPixel->coordinateY <= startPixel->coordinateY) {
-		diffInYLine = startPixel->coordinateY - endPixel->coordinateY + 1;
-		angleOfInclination = - (double)diffInYLine / (double)diffInXLine;std::cout<< angleOfInclination<<std::endl;
-	} else {
+	if (startPixel->coordinateY <= endPixel->coordinateY) {
 		diffInYLine = endPixel->coordinateY - startPixel->coordinateY + 1;
 		angleOfInclination = (double)diffInYLine / (double)diffInXLine;
+	} else {
+		diffInYLine = startPixel->coordinateY - endPixel->coordinateY + 1;
+		angleOfInclination = - (double)diffInYLine / (double)diffInXLine;
 	}
 	unsigned int i = 0, j = 0;
+	double increaser = 0.0;
 	if (fabs(angleOfInclination) <= 1) {
 		while (i < diffInXLine) {
 			setPixel(picture, startPixel->coordinateX + i,
-					(int)(startPixel->coordinateY + j));
+					startPixel->coordinateY + (int)increaser);
 			i++;
-			j += angleOfInclination;
+			increaser += angleOfInclination;
 		}
 		assert(i == diffInXLine);
 	} else {
 		angleOfInclination = 1.0 / angleOfInclination;
 		while (j < diffInYLine) {
-			setPixel(picture, (int)(startPixel->coordinateX + i),
+			setPixel(picture, startPixel->coordinateX + (int)increaser,
 					startPixel->coordinateY + j);
 			j++;
-			i += angleOfInclination;
+			increaser += angleOfInclination;
 		}
 		assert(j == diffInYLine);
 	}
