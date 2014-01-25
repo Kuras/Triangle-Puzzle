@@ -205,9 +205,21 @@ static void testDrawLine() {
 	assert(getColorPixel (getPixel (picture,1,1)) == BLACK);
 	assert(getColorPixel (getPixel (picture,2,1)) == WHITE); // !!!!!!
 	assert(getColorPixel (getPixel (picture,0,1)) == WHITE); // !!!!!!
-	// case 4x2
-	// case 8x5
-	// case 2x9
+	// cause 5x5
+	startPixel = getPixel(picture, 5, 10);
+	endPixel = getPixel(picture, 9, 6);
+	drawLine(startPixel, endPixel, picture);
+	i = 0;
+	while (i < 5) {
+		assert(getColorPixel (getPixel (picture,5+i,10+i)) == BLACK);
+		assert(getColorPixel (getPixel (picture,4+i,10+i)) == WHITE); // !!!!!!
+		assert(getColorPixel (getPixel (picture,6+i,10+i)) == WHITE); // !!!!!!
+		i++;
+	}
+
+	// cause 4x2
+	// cause 8x5
+	// cause 2x9
 	deleteTrianglePicture(picture);
 
 }
